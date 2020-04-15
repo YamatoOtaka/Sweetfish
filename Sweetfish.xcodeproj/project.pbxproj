@@ -19,6 +19,7 @@
 		63E1FE652446E91900113F0D /* Sweetfish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E1FE322446E64400113F0D /* Sweetfish.framework */; };
 		63E1FE662446E91900113F0D /* Sweetfish.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63E1FE322446E64400113F0D /* Sweetfish.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		63E1FE7524473E9800113F0D /* SweetfishImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1FE7424473E9800113F0D /* SweetfishImageView.swift */; };
+		63E1FE78244746B400113F0D /* DeepLabV3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 63E1FE77244746B400113F0D /* DeepLabV3.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		63E1FE5E2446E8B200113F0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		63E1FE602446E8B200113F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63E1FE7424473E9800113F0D /* SweetfishImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetfishImageView.swift; sourceTree = "<group>"; };
+		63E1FE77244746B400113F0D /* DeepLabV3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DeepLabV3.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		63E1FE342446E64400113F0D /* Sweetfish */ = {
 			isa = PBXGroup;
 			children = (
+				63E1FE762447461300113F0D /* CoreMLModels */,
 				63E1FE352446E64400113F0D /* Sweetfish.h */,
 				63E1FE7424473E9800113F0D /* SweetfishImageView.swift */,
 				63E1FE362446E64400113F0D /* Info.plist */,
@@ -164,6 +167,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		63E1FE762447461300113F0D /* CoreMLModels */ = {
+			isa = PBXGroup;
+			children = (
+				63E1FE77244746B400113F0D /* DeepLabV3.mlmodel */,
+			);
+			path = CoreMLModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,6 +321,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63E1FE7524473E9800113F0D /* SweetfishImageView.swift in Sources */,
+				63E1FE78244746B400113F0D /* DeepLabV3.mlmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
