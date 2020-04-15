@@ -23,6 +23,7 @@
 		63E1FE7A244747CA00113F0D /* CoreMLModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1FE79244747CA00113F0D /* CoreMLModelType.swift */; };
 		63E1FE7C2447484F00113F0D /* DeepLabV3FP16.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 63E1FE7B2447484F00113F0D /* DeepLabV3FP16.mlmodel */; };
 		63E1FE7E2447487600113F0D /* DeepLabV3Int8LUT.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 63E1FE7D2447487600113F0D /* DeepLabV3Int8LUT.mlmodel */; };
+		63E1FE8024474BC800113F0D /* CoreMLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1FE7F24474BC800113F0D /* CoreMLManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		63E1FE79244747CA00113F0D /* CoreMLModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMLModelType.swift; sourceTree = "<group>"; };
 		63E1FE7B2447484F00113F0D /* DeepLabV3FP16.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DeepLabV3FP16.mlmodel; sourceTree = "<group>"; };
 		63E1FE7D2447487600113F0D /* DeepLabV3Int8LUT.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = DeepLabV3Int8LUT.mlmodel; sourceTree = "<group>"; };
+		63E1FE7F24474BC800113F0D /* CoreMLManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreMLManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +134,7 @@
 				63E1FE762447461300113F0D /* CoreMLModels */,
 				63E1FE352446E64400113F0D /* Sweetfish.h */,
 				63E1FE7424473E9800113F0D /* SweetfishImageView.swift */,
+				63E1FE7F24474BC800113F0D /* CoreMLManager.swift */,
 				63E1FE79244747CA00113F0D /* CoreMLModelType.swift */,
 				63E1FE362446E64400113F0D /* Info.plist */,
 			);
@@ -332,6 +335,7 @@
 				63E1FE7E2447487600113F0D /* DeepLabV3Int8LUT.mlmodel in Sources */,
 				63E1FE7C2447484F00113F0D /* DeepLabV3FP16.mlmodel in Sources */,
 				63E1FE7524473E9800113F0D /* SweetfishImageView.swift in Sources */,
+				63E1FE8024474BC800113F0D /* CoreMLManager.swift in Sources */,
 				63E1FE78244746B400113F0D /* DeepLabV3.mlmodel in Sources */,
 				63E1FE7A244747CA00113F0D /* CoreMLModelType.swift in Sources */,
 			);
