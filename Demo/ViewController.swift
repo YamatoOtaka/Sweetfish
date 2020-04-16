@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     @IBAction func buttonTap(_ sender: Any) {
         if sweetfishImageView.isMaskImage {
             sweetfishImageView.reset()
-            button.setTitle("Predicr", for: .normal)
+            button.setTitle("Predict", for: .normal)
         } else {
             sweetfishImageView.predict {[weak self] error in
                 guard let self = self else { return }
