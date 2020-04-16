@@ -9,45 +9,44 @@
 import UIKit
 
 public final class SweetfishImageView: UIImageView {
-    private lazy var segmentationView = SegmentationView()
     private lazy var mlManager = CoreMLManager.init(type: .deepLabV3)
     private var predictCompletionHandler: ((Error?) -> Void)?
 
-    var mlModelType: CoreMLModelType = .deepLabV3 {
+    public var mlModelType: CoreMLModelType = .deepLabV3 {
         didSet {
             self.mlManager = CoreMLManager.init(type: mlModelType)
         }
     }
 
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
+    public var isMaskImage: Bool {
+        return subviews.count != 0
     }
 
-    required public init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setupViews()
-    }
-
-    func predict(completion: @escaping ((Error?) -> Void)) {
+    public func predict(completion: @escaping ((Error?) -> Void)) {
         predictCompletionHandler = completion
         guard let cgImage = image?.cgImage else {
             // TODO: Add Error.
             self.predictCompletionHandler?(nil)
             return
         }
-        segmentationView.frame = self.imageFrame
         mlManager.predict(with: cgImage) {[weak self] mlMulutiArray, error in
-            self?.segmentationView.segmentationmap = mlMulutiArray
+            self?.configureSegmentation(mlMulutiArray: mlMulutiArray)
             DispatchQueue.main.async {[weak self] in
                 self?.predictCompletionHandler?(error)
             }
         }
     }
 
-    private func setupViews() {
+    public func reset() {
+        self.subviews.forEach { $0.removeFromSuperview() }
+    }
+
+    private func configureSegmentation(mlMulutiArray: SegmentationResultMLMultiArray?) {
+        let segmentationView = SegmentationView()
         addSubview(segmentationView)
         segmentationView.backgroundColor = .clear
+        segmentationView.frame = self.imageFrame
+        segmentationView.segmentationmap = mlMulutiArray
     }
 }
 

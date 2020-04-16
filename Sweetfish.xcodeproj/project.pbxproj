@@ -24,6 +24,8 @@
 		63E1FEA32448954B00113F0D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63E1FEA12448954B00113F0D /* Main.storyboard */; };
 		63E1FEA52448954B00113F0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63E1FEA42448954B00113F0D /* Assets.xcassets */; };
 		63E1FEA82448954C00113F0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 63E1FEA62448954B00113F0D /* LaunchScreen.storyboard */; };
+		63E1FEAD24489F9D00113F0D /* Sweetfish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E1FE322446E64400113F0D /* Sweetfish.framework */; };
+		63E1FEAE24489F9D00113F0D /* Sweetfish.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 63E1FE322446E64400113F0D /* Sweetfish.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +36,28 @@
 			remoteGlobalIDString = 63E1FE312446E64400113F0D;
 			remoteInfo = Sweetfish;
 		};
+		63E1FEAF24489F9D00113F0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 63E1FE292446E64400113F0D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63E1FE312446E64400113F0D;
+			remoteInfo = Sweetfish;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		63E1FEB124489F9D00113F0D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				63E1FEAE24489F9D00113F0D /* Sweetfish.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		63E1FE322446E64400113F0D /* Sweetfish.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sweetfish.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +104,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63E1FEAD24489F9D00113F0D /* Sweetfish.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -236,10 +260,12 @@
 				63E1FE952448954A00113F0D /* Sources */,
 				63E1FE962448954A00113F0D /* Frameworks */,
 				63E1FE972448954A00113F0D /* Resources */,
+				63E1FEB124489F9D00113F0D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				63E1FEB024489F9D00113F0D /* PBXTargetDependency */,
 			);
 			name = Demo;
 			productName = Demo;
@@ -356,6 +382,11 @@
 			isa = PBXTargetDependency;
 			target = 63E1FE312446E64400113F0D /* Sweetfish */;
 			targetProxy = 63E1FE3D2446E64400113F0D /* PBXContainerItemProxy */;
+		};
+		63E1FEB024489F9D00113F0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63E1FE312446E64400113F0D /* Sweetfish */;
+			targetProxy = 63E1FEAF24489F9D00113F0D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

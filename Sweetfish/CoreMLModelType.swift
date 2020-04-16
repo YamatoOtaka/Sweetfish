@@ -8,7 +8,7 @@
 
 import Vision
 
-enum CoreMLModelType {
+public enum CoreMLModelType {
     case deepLabV3
     case deepLabV3FP16
     case deepLabV3Int8LUT
