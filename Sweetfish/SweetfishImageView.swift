@@ -19,12 +19,6 @@ public final class SweetfishImageView: UIImageView {
         }
     }
 
-    override public var image: UIImage? {
-        didSet {
-            segmentationView.frame = self.imageFrame
-        }
-    }
-
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
