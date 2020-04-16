@@ -12,11 +12,16 @@ public final class SweetfishImageView: UIImageView {
     private lazy var segmentationView = SegmentationView()
     private lazy var mlManager = CoreMLManager.init(type: .deepLabV3)
     private var predictCompletionHandler: ((Error?) -> Void)?
-    private var colors: [Int32: UIColor] = [:]
 
     var mlModelType: CoreMLModelType = .deepLabV3 {
         didSet {
             self.mlManager = CoreMLManager.init(type: mlModelType)
+        }
+    }
+
+    override public var image: UIImage? {
+        didSet {
+            segmentationView.frame = self.imageFrame
         }
     }
 
@@ -31,17 +36,24 @@ public final class SweetfishImageView: UIImageView {
     }
 
     func predict(completion: @escaping ((Error?) -> Void)) {
-        self.predictCompletionHandler = completion
+        predictCompletionHandler = completion
         guard let cgImage = image?.cgImage else {
             // TODO: Add Error.
             self.predictCompletionHandler?(nil)
             return
         }
+        segmentationView.frame = self.imageFrame
         mlManager.predict(with: cgImage) {[weak self] mlMulutiArray, error in
+            self?.segmentationView.segmentationmap = mlMulutiArray
+            DispatchQueue.main.async {[weak self] in
+                self?.predictCompletionHandler?(error)
+            }
         }
     }
 
     private func setupViews() {
+        addSubview(segmentationView)
+        segmentationView.backgroundColor = .clear
     }
 }
 
