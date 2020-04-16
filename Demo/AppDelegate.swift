@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Sample
+//  Demo
 //
-//  Created by 大高倭 on 2020/04/15.
+//  Created by 大高倭 on 2020/04/16.
 //  Copyright © 2020 YamatoOtaka. All rights reserved.
 //
 
