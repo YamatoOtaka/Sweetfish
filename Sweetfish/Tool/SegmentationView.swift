@@ -54,7 +54,7 @@ final class SegmentationView: UIView {
     }
 
     private func segmentationColor(with index: Int32) -> UIColor {
-        if index == 3 {
+        if index == objectType.rawValue {
             return UIColor.clear
         } else {
             if let superviewBackgroundColor = superview?.backgroundColor, superviewBackgroundColor != .clear {

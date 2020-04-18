@@ -36,7 +36,7 @@
                                     <action selector="buttonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kFm-qY-h7y"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="IEs-RU-HHo">
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IEs-RU-HHo">
                                 <rect key="frame" x="197" y="456" width="20" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="20" id="MWW-Yu-wyN"/>

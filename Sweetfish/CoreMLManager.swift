@@ -32,7 +32,7 @@ final class CoreMLManager {
         guard let visionModel = try? VNCoreMLModel.init(for: segmentationModel) else { return }
         self.visionModel = visionModel
         visionRequest = VNCoreMLRequest(model: visionModel, completionHandler: visionRequestCompletionHandler)
-        visionRequest?.imageCropAndScaleOption = .centerCrop
+        visionRequest?.imageCropAndScaleOption = .scaleFit
     }
 
     private func visionRequestCompletionHandler(request: VNRequest, error: Error?) {

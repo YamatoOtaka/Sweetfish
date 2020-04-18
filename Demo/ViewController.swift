@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         } else {
             updateIndicatorState(shouldShow: true)
             button.isEnabled = false
-            sweetfishImageView.predict(objectType: .fish) {[weak self] error in
+            sweetfishImageView.predict(objectType: .human) {[weak self] error in
                 guard let self = self else { return }
                 self.updateIndicatorState(shouldShow: false)
                 self.button.isEnabled = true
@@ -53,7 +53,7 @@ class ViewController: UIViewController {
     func setupSweetfish() {
         sweetfishImageView.mlModelType = .deepLabV3
         sweetfishImageView.contentMode = .scaleAspectFit
-        sweetfishImageView.image = UIImage(named: "fish")
+        sweetfishImageView.image = UIImage(named: "yamato")
     }
 
     func updateIndicatorState(shouldShow: Bool) {
