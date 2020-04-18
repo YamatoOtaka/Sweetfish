@@ -37,7 +37,7 @@ class ViewController: UIViewController {
         } else {
             updateIndicatorState(shouldShow: true)
             button.isEnabled = false
-            sweetfishImageView.predict {[weak self] error in
+            sweetfishImageView.predict(objectType: .fish) {[weak self] error in
                 guard let self = self else { return }
                 self.updateIndicatorState(shouldShow: false)
                 self.button.isEnabled = true

@@ -10,6 +10,7 @@ import UIKit
 
 final class SegmentationView: UIView {
     private var completionHandler: ((Error?) -> Void)?
+    private var objectType: ObjectType = .human
     private var segmentationmap: SegmentationResultMLMultiArray? = nil {
         didSet {
             self.setNeedsDisplay()
@@ -46,8 +47,9 @@ final class SegmentationView: UIView {
         }
     }
 
-    func updateSegmentationMap(segmentationMap: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Error?) -> Void)) {
+    func updateSegmentationMap(segmentationMap: SegmentationResultMLMultiArray?, objectType: ObjectType, completionHandler: @escaping ((Error?) -> Void)) {
         self.segmentationmap = segmentationMap
+        self.objectType = objectType
         self.completionHandler = completionHandler
     }
 

@@ -27,3 +27,8 @@ public enum CoreMLModelType {
         }
     }
 }
+
+public enum ObjectType: Int32 {
+    case human = 15
+    case fish = 3
+}

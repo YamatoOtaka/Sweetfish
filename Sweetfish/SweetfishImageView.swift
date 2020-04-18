@@ -22,7 +22,7 @@ public final class SweetfishImageView: UIImageView {
         return subviews.count != 0
     }
 
-    public func predict(completion: @escaping ((Error?) -> Void)) {
+    public func predict(objectType: ObjectType, completion: @escaping ((Error?) -> Void)) {
         predictCompletionHandler = completion
         guard let cgImage = image?.cgImage else {
             // TODO: Add Error.
@@ -30,7 +30,7 @@ public final class SweetfishImageView: UIImageView {
             return
         }
         mlManager.predict(with: cgImage) {[weak self] mlMulutiArray, error in
-            self?.configureSegmentation(mlMulutiArray: mlMulutiArray, completionHandler: { error in
+            self?.configureSegmentation(mlMulutiArray: mlMulutiArray, objectType: objectType, completionHandler: { error in
                 self?.predictCompletionHandler?(error)
             })
         }
@@ -40,16 +40,15 @@ public final class SweetfishImageView: UIImageView {
         self.subviews.forEach { $0.removeFromSuperview() }
     }
 
-    private func configureSegmentation(mlMulutiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Error?) -> Void)) {
+    private func configureSegmentation(mlMulutiArray: SegmentationResultMLMultiArray?, objectType: ObjectType, completionHandler: @escaping ((Error?) -> Void)) {
         DispatchQueue.main.async {
             let segmentationView = SegmentationView()
             self.addSubview(segmentationView)
             segmentationView.backgroundColor = .clear
             segmentationView.frame = self.imageFrame
-            segmentationView.updateSegmentationMap(segmentationMap: mlMulutiArray) { error in
+            segmentationView.updateSegmentationMap(segmentationMap: mlMulutiArray, objectType: objectType) { error in
                 completionHandler(error)
             }
         }
     }
 }
-
