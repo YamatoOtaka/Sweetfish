@@ -12,6 +12,7 @@ public enum CoreMLModelType {
     case deepLabV3
     case deepLabV3FP16
     case deepLabV3Int8LUT
+    case custom(model: MLModel)
 
     var model: MLModel {
         switch self {
@@ -21,6 +22,8 @@ public enum CoreMLModelType {
             return DeepLabV3FP16().model
         case .deepLabV3Int8LUT:
             return DeepLabV3Int8LUT().model
+        case .custom(let model):
+            return model
         }
     }
 }
