@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     let sweetfishImageView = SweetfishImageView()
 
     @IBOutlet weak var baseView: UIView!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var button: UIButton! {
         didSet {
             button.layer.cornerRadius = 23
@@ -22,8 +23,10 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        indicator.isHidden = true
         baseView.addSubview(sweetfishImageView)
         sweetfishImageView.setConstraintsToFill()
+
         setupSweetfish()
     }
 
@@ -32,8 +35,12 @@ class ViewController: UIViewController {
             sweetfishImageView.reset()
             button.setTitle("Predict", for: .normal)
         } else {
+            updateIndicatorState(shouldShow: true)
+            button.isEnabled = false
             sweetfishImageView.predict {[weak self] error in
                 guard let self = self else { return }
+                self.updateIndicatorState(shouldShow: false)
+                self.button.isEnabled = true
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
@@ -47,6 +54,16 @@ class ViewController: UIViewController {
         sweetfishImageView.mlModelType = .deepLabV3
         sweetfishImageView.contentMode = .scaleAspectFit
         sweetfishImageView.image = UIImage(named: "fish")
+    }
+
+    func updateIndicatorState(shouldShow: Bool) {
+        if shouldShow {
+            indicator.isHidden = false
+            indicator.startAnimating()
+        } else {
+            indicator.isHidden = true
+            indicator.stopAnimating()
+        }
     }
 }
 

@@ -36,11 +36,20 @@
                                     <action selector="buttonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kFm-qY-h7y"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="IEs-RU-HHo">
+                                <rect key="frame" x="197" y="456" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="MWW-Yu-wyN"/>
+                                    <constraint firstAttribute="width" secondItem="IEs-RU-HHo" secondAttribute="height" multiplier="1:1" id="eWu-QZ-uif"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="piw-Cj-MPc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="36" id="6Vz-yp-o4R"/>
+                            <constraint firstItem="IEs-RU-HHo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EGL-AX-oyI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9qq-hn-3Ji" secondAttribute="trailing" constant="26" id="HSK-v5-aty"/>
+                            <constraint firstItem="IEs-RU-HHo" firstAttribute="top" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="18" id="OJ8-Yn-cml"/>
                             <constraint firstItem="9qq-hn-3Ji" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="26" id="Olx-R1-atv"/>
                             <constraint firstItem="piw-Cj-MPc" firstAttribute="top" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="135" id="gC7-re-gw4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="piw-Cj-MPc" secondAttribute="trailing" constant="36" id="oPg-hi-PMO"/>
@@ -51,6 +60,7 @@
                     <connections>
                         <outlet property="baseView" destination="9qq-hn-3Ji" id="RnJ-dz-2rf"/>
                         <outlet property="button" destination="piw-Cj-MPc" id="U4I-wm-mGQ"/>
+                        <outlet property="indicator" destination="IEs-RU-HHo" id="abm-lv-WZR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
