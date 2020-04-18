@@ -30,10 +30,11 @@ public final class SweetfishImageView: UIImageView {
             return
         }
         mlManager.predict(with: cgImage) {[weak self] mlMulutiArray, error in
-            self?.configureSegmentation(mlMulutiArray: mlMulutiArray)
-            DispatchQueue.main.async {[weak self] in
-                self?.predictCompletionHandler?(error)
-            }
+            self?.configureSegmentation(mlMulutiArray: mlMulutiArray, completionHandler: { error in
+                DispatchQueue.main.async {[weak self] in
+                    self?.predictCompletionHandler?(error)
+                }
+            })
         }
     }
 
@@ -41,12 +42,14 @@ public final class SweetfishImageView: UIImageView {
         self.subviews.forEach { $0.removeFromSuperview() }
     }
 
-    private func configureSegmentation(mlMulutiArray: SegmentationResultMLMultiArray?) {
+    private func configureSegmentation(mlMulutiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Error?) -> Void)) {
         let segmentationView = SegmentationView()
         addSubview(segmentationView)
         segmentationView.backgroundColor = .clear
         segmentationView.frame = self.imageFrame
-        segmentationView.segmentationmap = mlMulutiArray
+        segmentationView.updateSegmentationMap(segmentationMap: mlMulutiArray) { error in
+            completionHandler(error)
+        }
     }
 }
 

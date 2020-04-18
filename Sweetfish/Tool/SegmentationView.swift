@@ -9,14 +9,19 @@
 import UIKit
 
 final class SegmentationView: UIView {
-    var segmentationmap: SegmentationResultMLMultiArray? = nil {
+    private var completionHandler: ((Error?) -> Void)?
+    private var segmentationmap: SegmentationResultMLMultiArray? = nil {
         didSet {
             self.setNeedsDisplay()
         }
     }
 
     override func draw(_ rect: CGRect) {
-        guard let context = UIGraphicsGetCurrentContext(), let segmentationmap = self.segmentationmap else { return }
+        guard let context = UIGraphicsGetCurrentContext(), let segmentationmap = self.segmentationmap else {
+            // TODO: Add Error
+            completionHandler?(nil)
+            return
+        }
         context.clear(rect)
         let size = bounds.size
         let segmentationmapWidthSize = segmentationmap.segmentationmapWidthSize
@@ -34,8 +39,16 @@ final class SegmentationView: UIView {
 
                 color.setFill()
                 UIRectFill(rect)
+                if y == (segmentationmapHeightSize-1) && x == (segmentationmapWidthSize-1) {
+                    completionHandler?(nil)
+                }
             }
         }
+    }
+
+    func updateSegmentationMap(segmentationMap: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Error?) -> Void)) {
+        self.segmentationmap = segmentationMap
+        self.completionHandler = completionHandler
     }
 
     private func segmentationColor(with index: Int32) -> UIColor {
