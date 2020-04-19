@@ -1,0 +1,11 @@
+framework module Sweetfish {
+  umbrella header "Sweetfish.h"
+
+  export *
+  module * { export * }
+}
+
+module Sweetfish.Swift {
+    header "Sweetfish-Swift.h"
+    requires objc
+}
