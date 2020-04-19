@@ -55,4 +55,4 @@ let isMask: Bool = sweetfishImageView.isMaskImage
 
 ## License
 
-`SVProgressHUD` is distributed under the terms and conditions of the [MIT license](https://github.com/YamatoOtaka/Sweetfish/master/LICENSE).
+`Sweetfish` is distributed under the terms and conditions of the [MIT license](https://github.com/YamatoOtaka/Sweetfish/master/LICENSE).
