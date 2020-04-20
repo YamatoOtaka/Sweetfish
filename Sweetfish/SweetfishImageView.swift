@@ -25,14 +25,17 @@ public final class SweetfishImageView: UIImageView {
     public func predict(objectType: ObjectType, completion: @escaping ((Error?) -> Void)) {
         predictCompletionHandler = completion
         guard let cgImage = image?.cgImage else {
-            // TODO: Add Error.
-            predictCompletionHandler?(nil)
+            predictCompletionHandler?(SweetfishError.cgImageNotFound)
             return
         }
         mlManager.predict(with: cgImage) {[weak self] mlMulutiArray, error in
-            self?.configureSegmentation(mlMulutiArray: mlMulutiArray, objectType: objectType, completionHandler: { error in
+            if let error = error {
                 self?.predictCompletionHandler?(error)
-            })
+            } else {
+                self?.configureSegmentation(mlMulutiArray: mlMulutiArray, objectType: objectType, completionHandler: { error in
+                    self?.predictCompletionHandler?(error)
+                })
+            }
         }
     }
 

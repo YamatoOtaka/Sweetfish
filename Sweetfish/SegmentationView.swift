@@ -19,8 +19,11 @@ final class SegmentationView: UIView {
 
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext(), let segmentationmap = self.segmentationmap else {
-            // TODO: Add Error
-            completionHandler?(nil)
+            if UIGraphicsGetCurrentContext() == nil {
+                completionHandler?(SweetfishError.graphicsCurrentContextNotFound)
+            } else {
+                completionHandler?(SweetfishError.segmentationmapNotFound)
+            }
             return
         }
         context.clear(rect)
