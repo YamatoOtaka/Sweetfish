@@ -138,10 +138,10 @@
 			isa = PBXGroup;
 			children = (
 				63E1FE762447461300113F0D /* CoreMLModels */,
-				63E1FE872447593D00113F0D /* Tool */,
 				63E1FE8C244873D800113F0D /* Extension */,
 				63E1FE352446E64400113F0D /* Sweetfish.h */,
 				63E1FE7424473E9800113F0D /* SweetfishImageView.swift */,
+				63E1FE882447599500113F0D /* SegmentationView.swift */,
 				63E1FE7F24474BC800113F0D /* CoreMLManager.swift */,
 				63E1FE79244747CA00113F0D /* CoreMLModelType.swift */,
 				6306E19D244B4F3D00D0E2BA /* ObjectType.swift */,
@@ -174,14 +174,6 @@
 				63E1FE7D2447487600113F0D /* DeepLabV3Int8LUT.mlmodel */,
 			);
 			path = CoreMLModels;
-			sourceTree = "<group>";
-		};
-		63E1FE872447593D00113F0D /* Tool */ = {
-			isa = PBXGroup;
-			children = (
-				63E1FE882447599500113F0D /* SegmentationView.swift */,
-			);
-			path = Tool;
 			sourceTree = "<group>";
 		};
 		63E1FE8C244873D800113F0D /* Extension */ = {
