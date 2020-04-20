@@ -2,7 +2,12 @@
 
 `Sweetfish` is a UIImageView wrapper library for removing backgrounds using Vision Framework's Image Segmentation.
 
+<a href="https://developer.apple.com/swift"><img alt="Swift5" src="https://img.shields.io/badge/language-Swift5-orange.svg"/></a>
+<a href="https://github.com/Carthage/Carthage"><img alt="Carthage" src="https://img.shields.io/badge/Carthage-compatible-yellow.svg"/></a>
+<a href="https://github.com/YamatoOtaka/Sweetfish/master/LICENSE"><img alt="Lincense" src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
+
 <img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample.gif" height="300">
+
 
 ## Installation
 
