@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6306E19E244B4F3D00D0E2BA /* ObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6306E19D244B4F3D00D0E2BA /* ObjectType.swift */; };
+		634A2A41244DB9410040FD79 /* SweetfishError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 634A2A40244DB9410040FD79 /* SweetfishError.swift */; };
 		63E1FE3C2446E64400113F0D /* Sweetfish.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63E1FE322446E64400113F0D /* Sweetfish.framework */; };
 		63E1FE412446E64400113F0D /* SweetfishTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E1FE402446E64400113F0D /* SweetfishTests.swift */; };
 		63E1FE432446E64400113F0D /* Sweetfish.h in Headers */ = {isa = PBXBuildFile; fileRef = 63E1FE352446E64400113F0D /* Sweetfish.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		6306E19D244B4F3D00D0E2BA /* ObjectType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectType.swift; sourceTree = "<group>"; };
+		634A2A40244DB9410040FD79 /* SweetfishError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SweetfishError.swift; sourceTree = "<group>"; };
 		63E1FE322446E64400113F0D /* Sweetfish.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sweetfish.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63E1FE352446E64400113F0D /* Sweetfish.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sweetfish.h; sourceTree = "<group>"; };
 		63E1FE362446E64400113F0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				63E1FE7F24474BC800113F0D /* CoreMLManager.swift */,
 				63E1FE79244747CA00113F0D /* CoreMLModelType.swift */,
 				6306E19D244B4F3D00D0E2BA /* ObjectType.swift */,
+				634A2A40244DB9410040FD79 /* SweetfishError.swift */,
 				63E1FE362446E64400113F0D /* Info.plist */,
 			);
 			path = Sweetfish;
@@ -342,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6306E19E244B4F3D00D0E2BA /* ObjectType.swift in Sources */,
+				634A2A41244DB9410040FD79 /* SweetfishError.swift in Sources */,
 				63E1FE8E244873F200113F0D /* UIImageView+.swift in Sources */,
 				63E1FE7E2447487600113F0D /* DeepLabV3Int8LUT.mlmodel in Sources */,
 				63E1FE7C2447484F00113F0D /* DeepLabV3FP16.mlmodel in Sources */,

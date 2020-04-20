@@ -20,11 +20,18 @@ final class CoreMLManager {
     }
 
     func predict(with cgImage: CGImage, completionHandler: @escaping ((_ :SegmentationResultMLMultiArray?,_ error: Error?) -> Void)) {
+        self.completionHandler = completionHandler
         DispatchQueue.global(qos: .background).async {[weak self] in
-            guard let request = self?.visionRequest else { return }
-            self?.completionHandler = completionHandler
+            guard let request = self?.visionRequest else {
+                self?.completionHandler?(nil, SweetfishError.visionRequestNotFound)
+                return
+            }
             let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
-            try? handler.perform([request])
+            do {
+                try handler.perform([request])
+            } catch {
+                self?.completionHandler?(nil, SweetfishError.perform)
+            }
         }
     }
 
