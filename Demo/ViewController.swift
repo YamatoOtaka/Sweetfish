@@ -39,9 +39,8 @@ class ViewController: UIViewController {
             self.button.isEnabled = true
 
             switch result {
-            case .success(let image):
-                self.sweetfishImageView.image = image
-                self.button.setTitle("Reset", for: .normal)
+            case .success(let originalImage, let clippingImage):
+                break
             case .failure(let error):
                 print(error.localizedDescription)
             }

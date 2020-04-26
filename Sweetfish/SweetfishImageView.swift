@@ -9,7 +9,7 @@
 import UIKit
 
 public enum Result {
-    case success(image: UIImage)
+    case success(originalImage: UIImage, clippingImage: UIImage)
     case failure(error: Error)
 }
 
@@ -52,7 +52,8 @@ public final class SweetfishImageView: UIImageView {
                 case .success(let maskImage):
                     if let maskedImage = image.masking(maskImage: maskImage) {
                         self?.subviews.forEach { $0.removeFromSuperview() }
-                        completionHandler(.success(image: maskedImage))
+                        self?.image = maskedImage
+                        completionHandler(.success(originalImage: image, clippingImage: maskedImage))
                     } else {
                         completionHandler(.failure(error: SweetfishError.maskingImageRetrieved))
                     }
