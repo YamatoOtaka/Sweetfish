@@ -67,36 +67,9 @@ final class SegmentationView: UIView {
 
     private func segmentationColor(with index: Int32) -> UIColor {
         if index == objectType.rawValue {
-            return UIColor.black
+            return .black
         } else {
-            if let superviewBackgroundColor = superview?.backgroundColor, superviewBackgroundColor != .clear {
-                return superviewBackgroundColor
-            }
             return .white
         }
-    }
-
-    // UIViewからUIImageに変更する
-    func viewToImage(_ view : UIView) -> UIImage {
-        
-        // キャプチャする範囲を取得する
-        let rect = view.bounds
-        
-        // 画像のcontextを作成する
-        UIGraphicsBeginImageContextWithOptions(rect.size, false, 1.0)
-        
-        // contextを取得する
-        let context : CGContext = UIGraphicsGetCurrentContext()!
-        
-        // view内の描画をcontextに複写する
-        view.layer.render(in: context)
-        
-        // contextをUIImageとして取得する
-        let image : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
-        
-        // contextを閉じる
-        UIGraphicsEndImageContext()
-        
-        return image
     }
 }

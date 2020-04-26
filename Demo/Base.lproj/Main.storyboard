@@ -43,22 +43,12 @@
                                     <constraint firstAttribute="width" secondItem="IEs-RU-HHo" secondAttribute="height" multiplier="1:1" id="eWu-QZ-uif"/>
                                 </constraints>
                             </activityIndicatorView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5UI-G6-4xw">
-                                <rect key="frame" x="87" y="661" width="240" height="128"/>
-                                <color key="backgroundColor" white="0.75707227450000003" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="PBZ-9D-5Wv"/>
-                                    <constraint firstAttribute="width" constant="240" id="n8q-SI-HSh"/>
-                                </constraints>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="5UI-G6-4xw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4ab-QK-4JN"/>
                             <constraint firstItem="piw-Cj-MPc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="36" id="6Vz-yp-o4R"/>
                             <constraint firstItem="IEs-RU-HHo" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="EGL-AX-oyI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9qq-hn-3Ji" secondAttribute="trailing" constant="26" id="HSK-v5-aty"/>
-                            <constraint firstItem="5UI-G6-4xw" firstAttribute="top" secondItem="piw-Cj-MPc" secondAttribute="bottom" constant="42" id="JQJ-RY-H9k"/>
                             <constraint firstItem="IEs-RU-HHo" firstAttribute="top" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="18" id="OJ8-Yn-cml"/>
                             <constraint firstItem="9qq-hn-3Ji" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="26" id="Olx-R1-atv"/>
                             <constraint firstItem="piw-Cj-MPc" firstAttribute="top" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="135" id="gC7-re-gw4"/>
@@ -71,7 +61,6 @@
                         <outlet property="baseView" destination="9qq-hn-3Ji" id="RnJ-dz-2rf"/>
                         <outlet property="button" destination="piw-Cj-MPc" id="U4I-wm-mGQ"/>
                         <outlet property="indicator" destination="IEs-RU-HHo" id="abm-lv-WZR"/>
-                        <outlet property="resultImageView" destination="5UI-G6-4xw" id="iCp-Zg-gDg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

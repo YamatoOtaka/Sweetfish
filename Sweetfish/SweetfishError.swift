@@ -13,6 +13,7 @@ public enum SweetfishError: Error, LocalizedError {
     case graphicsCurrentContextNotFound
     case segmentationmapNotFound
     case maskingImageRetrieved
+    case unknown
 
     public var errorDescription: String? {
         switch self {
@@ -22,6 +23,7 @@ public enum SweetfishError: Error, LocalizedError {
         case .graphicsCurrentContextNotFound: return "UIGraphicsGetCurrentContext could not be obtained."
         case .segmentationmapNotFound: return "Could not get segmentation map in SegmentationView."
         case .maskingImageRetrieved: return "The masked image could not be retrieved."
+        case .unknown: return "Unknown error."
         }
     }
 }

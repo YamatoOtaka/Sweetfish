@@ -23,41 +23,35 @@ public final class SweetfishImageView: UIImageView {
         }
     }
 
-    public var isMaskImage: Bool {
-        return subviews.count != 0
-    }
-
     public func predict(objectType: ObjectType, completion: @escaping ((Result) -> Void)) {
         predictCompletionHandler = completion
         guard let image = image, let cgImage = image.cgImage else {
             predictCompletionHandler?(.failure(error: SweetfishError.cgImageNotFound))
             return
         }
-        mlManager.predict(with: cgImage) {[weak self] mlMulutiArray, error in
-            if let error = error {
-                self?.predictCompletionHandler?(.failure(error: error))
-            } else {
-                self?.configureSegmentation(objectType: objectType, image: image, mlMulutiArray: mlMulutiArray) { result in
+        mlManager.predict(with: cgImage) {[weak self] result in
+            switch result {
+            case .success(let mlMultiArray):
+                self?.configureSegmentation(objectType: objectType, image: image, mlMultiArray: mlMultiArray) { result in
                     self?.predictCompletionHandler?(result)
                 }
+            case .failure(let error):
+                self?.predictCompletionHandler?(.failure(error: error))
             }
         }
     }
 
-    public func reset() {
-        self.subviews.forEach { $0.removeFromSuperview() }
-    }
-
-    private func configureSegmentation(objectType: ObjectType, image: UIImage, mlMulutiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Result) -> Void)) {
+    private func configureSegmentation(objectType: ObjectType, image: UIImage, mlMultiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Result) -> Void)) {
         DispatchQueue.main.async {
             let segmentationView = SegmentationView()
             self.addSubview(segmentationView)
             segmentationView.backgroundColor = .clear
             segmentationView.frame = self.imageFrame
-            segmentationView.updateSegmentationMap(segmentationMap: mlMulutiArray, objectType: objectType) {segmentationResult in
+            segmentationView.updateSegmentationMap(segmentationMap: mlMultiArray, objectType: objectType) {[weak self] segmentationResult in
                 switch segmentationResult {
                 case .success(let maskImage):
                     if let maskedImage = image.masking(maskImage: maskImage) {
+                        self?.subviews.forEach { $0.removeFromSuperview() }
                         completionHandler(.success(image: maskedImage))
                     } else {
                         completionHandler(.failure(error: SweetfishError.maskingImageRetrieved))
@@ -67,31 +61,5 @@ public final class SweetfishImageView: UIImageView {
                 }
             }
         }
-    }
-}
-
-extension UIImage {
-    
-    // 指定したマスク画像を利用して元画像を切り抜く
-    // マスク画像は非透過画像を利用する (輝度情報からマスクを作成している模様)
-    func masking(maskImage: UIImage?) -> UIImage? {
-        guard let maskImage = maskImage?.cgImage else {
-            return nil
-        }
-        
-        //マスクを作成する
-        let mask = CGImage(maskWidth: maskImage.width,
-                           height: maskImage.height,
-                           bitsPerComponent: maskImage.bitsPerComponent,
-                           bitsPerPixel: maskImage.bitsPerPixel,
-                           bytesPerRow: maskImage.bytesPerRow,
-                           provider: maskImage.dataProvider!,
-                           decode: nil, shouldInterpolate: false)!
-        
-        //マスクを適用する
-        guard let maskedImage = self.cgImage?.masking(mask) else {
-            return nil
-        }
-        return UIImage(cgImage: maskedImage)
     }
 }
