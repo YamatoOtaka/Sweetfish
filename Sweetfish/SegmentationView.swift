@@ -8,8 +8,13 @@
 
 import UIKit
 
+enum SegmentationResult {
+    case success(maskImage: UIImage)
+    case failure(error: Error)
+}
+
 final class SegmentationView: UIView {
-    private var completionHandler: ((Error?) -> Void)?
+    private var completionHandler: ((SegmentationResult) -> Void)?
     private var objectType: ObjectType = .human
     private var segmentationmap: SegmentationResultMLMultiArray? = nil {
         didSet {
@@ -20,9 +25,9 @@ final class SegmentationView: UIView {
     override func draw(_ rect: CGRect) {
         guard let context = UIGraphicsGetCurrentContext(), let segmentationmap = self.segmentationmap else {
             if UIGraphicsGetCurrentContext() == nil {
-                completionHandler?(SweetfishError.graphicsCurrentContextNotFound)
+                completionHandler?(.failure(error: SweetfishError.graphicsCurrentContextNotFound))
             } else {
-                completionHandler?(SweetfishError.segmentationmapNotFound)
+                completionHandler?(.failure(error: SweetfishError.segmentationmapNotFound))
             }
             return
         }
@@ -44,13 +49,17 @@ final class SegmentationView: UIView {
                 color.setFill()
                 UIRectFill(rect)
                 if y == (segmentationmapHeightSize-1) && x == (segmentationmapWidthSize-1) {
-                    completionHandler?(nil)
+                    if let cgImage = context.makeImage() {
+                        completionHandler?(.success(maskImage: UIImage.init(cgImage: cgImage)))
+                    } else {
+                        completionHandler?(.failure(error: SweetfishError.cgImageNotFound))
+                    }
                 }
             }
         }
     }
 
-    func updateSegmentationMap(segmentationMap: SegmentationResultMLMultiArray?, objectType: ObjectType, completionHandler: @escaping ((Error?) -> Void)) {
+    func updateSegmentationMap(segmentationMap: SegmentationResultMLMultiArray?, objectType: ObjectType, completionHandler: @escaping ((SegmentationResult) -> Void)) {
         self.segmentationmap = segmentationMap
         self.objectType = objectType
         self.completionHandler = completionHandler
@@ -58,12 +67,36 @@ final class SegmentationView: UIView {
 
     private func segmentationColor(with index: Int32) -> UIColor {
         if index == objectType.rawValue {
-            return UIColor.clear
+            return UIColor.black
         } else {
             if let superviewBackgroundColor = superview?.backgroundColor, superviewBackgroundColor != .clear {
                 return superviewBackgroundColor
             }
             return .white
         }
+    }
+
+    // UIViewからUIImageに変更する
+    func viewToImage(_ view : UIView) -> UIImage {
+        
+        // キャプチャする範囲を取得する
+        let rect = view.bounds
+        
+        // 画像のcontextを作成する
+        UIGraphicsBeginImageContextWithOptions(rect.size, false, 1.0)
+        
+        // contextを取得する
+        let context : CGContext = UIGraphicsGetCurrentContext()!
+        
+        // view内の描画をcontextに複写する
+        view.layer.render(in: context)
+        
+        // contextをUIImageとして取得する
+        let image : UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        // contextを閉じる
+        UIGraphicsEndImageContext()
+        
+        return image
     }
 }

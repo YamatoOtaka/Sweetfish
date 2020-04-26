@@ -15,6 +15,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var resultImageView: UIImageView!
     @IBOutlet weak var button: UIButton! {
         didSet {
             button.layer.cornerRadius = 23
@@ -37,14 +38,17 @@ class ViewController: UIViewController {
         } else {
             updateIndicatorState(shouldShow: true)
             button.isEnabled = false
-            sweetfishImageView.predict(objectType: .fish) {[weak self] error in
+            sweetfishImageView.predict(objectType: .fish) {[weak self] result in
                 guard let self = self else { return }
                 self.updateIndicatorState(shouldShow: false)
                 self.button.isEnabled = true
-                if let error = error {
-                    print(error.localizedDescription)
-                } else {
+
+                switch result {
+                case .success(let image):
+                    self.resultImageView.image = image
                     self.button.setTitle("Reset", for: .normal)
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
             }
         }

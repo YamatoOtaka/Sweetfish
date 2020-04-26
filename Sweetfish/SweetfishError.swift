@@ -12,6 +12,7 @@ public enum SweetfishError: Error, LocalizedError {
     case perform
     case graphicsCurrentContextNotFound
     case segmentationmapNotFound
+    case maskingImageRetrieved
 
     public var errorDescription: String? {
         switch self {
@@ -20,6 +21,7 @@ public enum SweetfishError: Error, LocalizedError {
         case .perform: return "Failed to perform VNImageRequestHandler."
         case .graphicsCurrentContextNotFound: return "UIGraphicsGetCurrentContext could not be obtained."
         case .segmentationmapNotFound: return "Could not get segmentation map in SegmentationView."
+        case .maskingImageRetrieved: return "The masked image could not be retrieved."
         }
     }
 }
