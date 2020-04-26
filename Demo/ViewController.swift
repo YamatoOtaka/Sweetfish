@@ -12,9 +12,15 @@ import Sweetfish
 class ViewController: UIViewController {
 
     let sweetfishImageView = SweetfishImageView()
+    var originalImage: UIImage?
 
     @IBOutlet weak var baseView: UIView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var resetButton: UIButton! {
+        didSet {
+            resetButton.layer.cornerRadius = 23
+        }
+    }
     @IBOutlet weak var button: UIButton! {
         didSet {
             button.layer.cornerRadius = 23
@@ -33,18 +39,24 @@ class ViewController: UIViewController {
     @IBAction func buttonTap(_ sender: Any) {
         updateIndicatorState(shouldShow: true)
         button.isEnabled = false
+        resetButton.isEnabled = false
         sweetfishImageView.predict(objectType: .fish) {[weak self] result in
             guard let self = self else { return }
             self.updateIndicatorState(shouldShow: false)
             self.button.isEnabled = true
+            self.resetButton.isEnabled = true
 
             switch result {
             case .success(let originalImage, let clippingImage):
-                break
+                self.originalImage = originalImage
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+    }
+
+    @IBAction func resetButtonTap(_ sender: Any) {
+        sweetfishImageView.image = originalImage
     }
 
     func setupSweetfish() {
