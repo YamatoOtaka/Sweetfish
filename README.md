@@ -40,8 +40,16 @@ sweetfishImageView.image = UIImage(named: "fish")
 
 There are currently two types of Segmentation Object Type `human` and `fish`.
 ```swift
-sweetfishImageView.predict(objectType: .fish) { error in
-    // TODO: Completion handle.
+sweetfishImageView.predict(objectType: .fish) { result in
+
+    switch result {
+    case .success(let originalImage, let clippingImage)
+        // You can get the original image and the clipped image as a result.
+        self.originalImage = originalImage
+        self.clippingImage = clippingImage
+    case .failure(let error):
+        print(error.localizedDescription)
+    }
 }
 ```
 
@@ -50,12 +58,6 @@ sweetfishImageView.predict(objectType: .fish) { error in
 ```.swift
 // When to use a custom Model
 sweetfishImageView.mlModelType = .custom(model: CustomMLModel)
-
-// If you want to reset the edit
-sweetfishImageView.reset()
-
-// Flag if the background of the image is removed
-let isMask: Bool = sweetfishImageView.isMaskImage
 ```
 
 ## License

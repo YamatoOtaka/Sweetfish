@@ -23,7 +23,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="piw-Cj-MPc">
-                                <rect key="frame" x="36" y="573" width="342" height="46"/>
+                                <rect key="frame" x="36" y="573" width="158" height="46"/>
                                 <color key="backgroundColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="14c-x2-l8v"/>
@@ -43,6 +43,20 @@
                                     <constraint firstAttribute="width" secondItem="IEs-RU-HHo" secondAttribute="height" multiplier="1:1" id="eWu-QZ-uif"/>
                                 </constraints>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AfO-Wg-uwI">
+                                <rect key="frame" x="220" y="573" width="158" height="46"/>
+                                <color key="backgroundColor" red="0.070588235289999995" green="0.070588235289999995" blue="0.070588235289999995" alpha="0.3283122859589041" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="3NR-FJ-fht"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="17"/>
+                                <state key="normal" title="Reset">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="resetButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dAU-d6-XdK"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -51,8 +65,11 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9qq-hn-3Ji" secondAttribute="trailing" constant="26" id="HSK-v5-aty"/>
                             <constraint firstItem="IEs-RU-HHo" firstAttribute="top" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="18" id="OJ8-Yn-cml"/>
                             <constraint firstItem="9qq-hn-3Ji" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="26" id="Olx-R1-atv"/>
+                            <constraint firstItem="AfO-Wg-uwI" firstAttribute="top" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="135" id="PeN-NL-o1C"/>
                             <constraint firstItem="piw-Cj-MPc" firstAttribute="top" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="135" id="gC7-re-gw4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="piw-Cj-MPc" secondAttribute="trailing" constant="36" id="oPg-hi-PMO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="AfO-Wg-uwI" secondAttribute="trailing" constant="36" id="hoA-Eh-gBZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="centerX" secondItem="piw-Cj-MPc" secondAttribute="trailing" constant="13" id="oPg-hi-PMO"/>
+                            <constraint firstItem="AfO-Wg-uwI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="centerX" constant="13" id="uVB-MM-oZ1"/>
                             <constraint firstAttribute="centerY" secondItem="9qq-hn-3Ji" secondAttribute="bottom" constant="10" id="yRj-9a-hvk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -61,6 +78,7 @@
                         <outlet property="baseView" destination="9qq-hn-3Ji" id="RnJ-dz-2rf"/>
                         <outlet property="button" destination="piw-Cj-MPc" id="U4I-wm-mGQ"/>
                         <outlet property="indicator" destination="IEs-RU-HHo" id="abm-lv-WZR"/>
+                        <outlet property="resetButton" destination="AfO-Wg-uwI" id="a6S-oB-8Fc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

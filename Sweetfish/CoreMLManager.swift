@@ -8,29 +8,34 @@
 
 import Vision
 
+enum VisionRequestResult {
+    case success(mlMultiArray: SegmentationResultMLMultiArray)
+    case failure(error: Error)
+}
+
 final class CoreMLManager {
     private let segmentationModel: MLModel
     private var visionModel: VNCoreMLModel?
     private var visionRequest: VNCoreMLRequest?
-    private var completionHandler: ((_ :SegmentationResultMLMultiArray?,_ error: Error?) -> Void)?
+    private var completionHandler: ((VisionRequestResult) -> Void)?
 
     init(type: CoreMLModelType) {
         segmentationModel = type.model
         setupVisionRequest()
     }
 
-    func predict(with cgImage: CGImage, completionHandler: @escaping ((_ :SegmentationResultMLMultiArray?,_ error: Error?) -> Void)) {
+    func predict(with cgImage: CGImage, completionHandler: @escaping ((VisionRequestResult) -> Void)) {
         self.completionHandler = completionHandler
         DispatchQueue.global(qos: .background).async {[weak self] in
             guard let request = self?.visionRequest else {
-                self?.completionHandler?(nil, SweetfishError.visionRequestNotFound)
+                self?.completionHandler?(.failure(error: SweetfishError.visionRequestNotFound))
                 return
             }
             let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
             do {
                 try handler.perform([request])
             } catch {
-                self?.completionHandler?(nil, SweetfishError.perform)
+                self?.completionHandler?(.failure(error: SweetfishError.perform))
             }
         }
     }
@@ -43,11 +48,15 @@ final class CoreMLManager {
     }
 
     private func visionRequestCompletionHandler(request: VNRequest, error: Error?) {
-        guard let observations = request.results as? [VNCoreMLFeatureValueObservation], let mlMulutiArray = observations.first?.featureValue.multiArrayValue else {
-            completionHandler?(nil, error)
-            return
+        if let error = error {
+            completionHandler?(.failure(error: error))
+        } else {
+            guard let observations = request.results as? [VNCoreMLFeatureValueObservation], let mlMulutiArray = observations.first?.featureValue.multiArrayValue else {
+                completionHandler?(.failure(error: SweetfishError.unknown))
+                return
+            }
+            completionHandler?(.success(mlMultiArray: SegmentationResultMLMultiArray.init(mlMultiArray: mlMulutiArray)))
         }
-        completionHandler?(SegmentationResultMLMultiArray.init(mlMultiArray: mlMulutiArray), error)
     }
 }
 

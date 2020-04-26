@@ -8,9 +8,14 @@
 
 import UIKit
 
+public enum Result {
+    case success(originalImage: UIImage, clippingImage: UIImage)
+    case failure(error: Error)
+}
+
 public final class SweetfishImageView: UIImageView {
     private lazy var mlManager = CoreMLManager.init(type: .deepLabV3)
-    private var predictCompletionHandler: ((Error?) -> Void)?
+    private var predictCompletionHandler: ((Result) -> Void)?
 
     public var mlModelType: CoreMLModelType = .deepLabV3 {
         didSet {
@@ -18,39 +23,43 @@ public final class SweetfishImageView: UIImageView {
         }
     }
 
-    public var isMaskImage: Bool {
-        return subviews.count != 0
-    }
-
-    public func predict(objectType: ObjectType, completion: @escaping ((Error?) -> Void)) {
+    public func predict(objectType: ObjectType, completion: @escaping ((Result) -> Void)) {
         predictCompletionHandler = completion
-        guard let cgImage = image?.cgImage else {
-            predictCompletionHandler?(SweetfishError.cgImageNotFound)
+        guard let image = image, let cgImage = image.cgImage else {
+            predictCompletionHandler?(.failure(error: SweetfishError.cgImageNotFound))
             return
         }
-        mlManager.predict(with: cgImage) {[weak self] mlMulutiArray, error in
-            if let error = error {
-                self?.predictCompletionHandler?(error)
-            } else {
-                self?.configureSegmentation(mlMulutiArray: mlMulutiArray, objectType: objectType, completionHandler: { error in
-                    self?.predictCompletionHandler?(error)
-                })
+        mlManager.predict(with: cgImage) {[weak self] result in
+            switch result {
+            case .success(let mlMultiArray):
+                self?.configureSegmentation(objectType: objectType, image: image, mlMultiArray: mlMultiArray) { result in
+                    self?.predictCompletionHandler?(result)
+                }
+            case .failure(let error):
+                self?.predictCompletionHandler?(.failure(error: error))
             }
         }
     }
 
-    public func reset() {
-        self.subviews.forEach { $0.removeFromSuperview() }
-    }
-
-    private func configureSegmentation(mlMulutiArray: SegmentationResultMLMultiArray?, objectType: ObjectType, completionHandler: @escaping ((Error?) -> Void)) {
+    private func configureSegmentation(objectType: ObjectType, image: UIImage, mlMultiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Result) -> Void)) {
         DispatchQueue.main.async {
             let segmentationView = SegmentationView()
             self.addSubview(segmentationView)
             segmentationView.backgroundColor = .clear
             segmentationView.frame = self.imageFrame
-            segmentationView.updateSegmentationMap(segmentationMap: mlMulutiArray, objectType: objectType) { error in
-                completionHandler(error)
+            segmentationView.updateSegmentationMap(segmentationMap: mlMultiArray, objectType: objectType) {[weak self] segmentationResult in
+                switch segmentationResult {
+                case .success(let maskImage):
+                    if let maskedImage = image.masking(maskImage: maskImage) {
+                        self?.subviews.forEach { $0.removeFromSuperview() }
+                        self?.image = maskedImage
+                        completionHandler(.success(originalImage: image, clippingImage: maskedImage))
+                    } else {
+                        completionHandler(.failure(error: SweetfishError.maskingImageRetrieved))
+                    }
+                case .failure(let error):
+                    completionHandler(.failure(error: error))
+                }
             }
         }
     }
