@@ -43,7 +43,7 @@ There are currently two types of Segmentation Object Type `human` and `fish`.
 sweetfishImageView.predict(objectType: .fish) { result in
 
     switch result {
-    case .success(let originalImage, let clippingImage)
+    case .success(let originalImage, let clippingImage):
         // You can get the original image and the clipped image as a result.
         self.originalImage = originalImage
         self.clippingImage = clippingImage
