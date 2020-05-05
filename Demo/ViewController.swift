@@ -40,19 +40,7 @@ class ViewController: UIViewController {
         updateIndicatorState(shouldShow: true)
         button.isEnabled = false
         resetButton.isEnabled = false
-        sweetfishImageView.predict(objectType: .fish) {[weak self] result in
-            guard let self = self else { return }
-            self.updateIndicatorState(shouldShow: false)
-            self.button.isEnabled = true
-            self.resetButton.isEnabled = true
-
-            switch result {
-            case .success(let originalImage, let clippingImage):
-                self.originalImage = originalImage
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        sweetfishImageView.predict(clippingMethod: .object(objectType: .fish))
     }
 
     @IBAction func resetButtonTap(_ sender: Any) {
@@ -63,6 +51,7 @@ class ViewController: UIViewController {
         sweetfishImageView.mlModelType = .deepLabV3
         sweetfishImageView.contentMode = .scaleAspectFit
         sweetfishImageView.image = UIImage(named: "fish")
+        sweetfishImageView.delegate = self
     }
 
     func updateIndicatorState(shouldShow: Bool) {
@@ -72,6 +61,20 @@ class ViewController: UIViewController {
         } else {
             indicator.isHidden = true
             indicator.stopAnimating()
+        }
+    }
+}
+extension ViewController: SweetfishImageViewDelegate {
+    func sweetfishImageView(clipDidFinish result: Result) {
+        self.updateIndicatorState(shouldShow: false)
+        self.button.isEnabled = true
+        self.resetButton.isEnabled = true
+
+        switch result {
+        case .success(let originalImage, let clippingImage):
+            self.originalImage = originalImage
+        case .failure(let error):
+            print(error.localizedDescription)
         }
     }
 }

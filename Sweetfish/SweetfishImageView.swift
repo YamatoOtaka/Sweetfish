@@ -13,9 +13,14 @@ public enum Result {
     case failure(error: Error)
 }
 
+public protocol SweetfishImageViewDelegate: class {
+    func sweetfishImageView(clipDidFinish result: Result)
+}
+
 public final class SweetfishImageView: UIImageView {
     private lazy var mlManager = CoreMLManager.init(type: .deepLabV3)
-    private var predictCompletionHandler: ((Result) -> Void)?
+    private var currentSegmentationView: SegmentationView?
+    public weak var delegate: SweetfishImageViewDelegate?
 
     public var mlModelType: CoreMLModelType = .deepLabV3 {
         didSet {
@@ -23,31 +28,33 @@ public final class SweetfishImageView: UIImageView {
         }
     }
 
-    public func predict(objectType: ObjectType, completion: @escaping ((Result) -> Void)) {
-        predictCompletionHandler = completion
+    public func predict(clippingMethod: ClippingMethod) {
         guard let image = image, let cgImage = image.cgImage else {
-            predictCompletionHandler?(.failure(error: SweetfishError.cgImageNotFound))
+            delegate?.sweetfishImageView(clipDidFinish: .failure(error: SweetfishError.cgImageNotFound))
             return
         }
         mlManager.predict(with: cgImage) {[weak self] result in
             switch result {
             case .success(let mlMultiArray):
-                self?.configureSegmentation(objectType: objectType, image: image, mlMultiArray: mlMultiArray) { result in
-                    self?.predictCompletionHandler?(result)
+                self?.configureSegmentation(clippingMethod: clippingMethod, image: image, mlMultiArray: mlMultiArray) { result in
+                    self?.delegate?.sweetfishImageView(clipDidFinish: result)
                 }
             case .failure(let error):
-                self?.predictCompletionHandler?(.failure(error: error))
+                self?.delegate?.sweetfishImageView(clipDidFinish: .failure(error: error))
             }
         }
     }
 
-    private func configureSegmentation(objectType: ObjectType, image: UIImage, mlMultiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Result) -> Void)) {
+    private func configureSegmentation(clippingMethod: ClippingMethod, image: UIImage, mlMultiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Result) -> Void)) {
         DispatchQueue.main.async {
             let segmentationView = SegmentationView()
+            self.currentSegmentationView = segmentationView
             self.addSubview(segmentationView)
             segmentationView.backgroundColor = .clear
             segmentationView.frame = self.imageFrame
-            segmentationView.updateSegmentationMap(segmentationMap: mlMultiArray, objectType: objectType) {[weak self] segmentationResult in
+            self.isUserInteractionEnabled = true
+            segmentationView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.segmentationViewDidTap(_:))))
+            segmentationView.updateSegmentationMap(segmentationMap: mlMultiArray, clippingMethod: clippingMethod) {[weak self] segmentationResult in
                 switch segmentationResult {
                 case .success(let maskImage):
                     if let maskedImage = image.masking(maskImage: maskImage) {
@@ -62,5 +69,10 @@ public final class SweetfishImageView: UIImageView {
                 }
             }
         }
+    }
+
+    @objc private func segmentationViewDidTap(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: currentSegmentationView)
+        print(location)
     }
 }
