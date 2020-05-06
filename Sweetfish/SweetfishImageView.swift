@@ -28,7 +28,9 @@ public final class SweetfishImageView: UIImageView {
         }
     }
 
-    public func predict(clippingMethod: ClippingMethod) {
+    public func clipping(clippingMethod: ClippingMethod) {
+        cancelSelectClipping()
+
         guard let image = image, let cgImage = image.cgImage else {
             delegate?.sweetfishImageView(clipDidFinish: .failure(error: SweetfishError.cgImageNotFound))
             return
@@ -47,6 +49,7 @@ public final class SweetfishImageView: UIImageView {
 
     public func cancelSelectClipping() {
         self.subviews.forEach { $0.removeFromSuperview() }
+        self.isUserInteractionEnabled = false
     }
 
     private func configureSegmentation(clippingMethod: ClippingMethod, image: UIImage, mlMultiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Result) -> Void)) {
@@ -56,13 +59,13 @@ public final class SweetfishImageView: UIImageView {
             self.addSubview(segmentationView)
             segmentationView.backgroundColor = .clear
             segmentationView.frame = self.imageFrame
-            self.isUserInteractionEnabled = true
             segmentationView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.segmentationViewDidTap(_:))))
             segmentationView.updateSegmentationMap(segmentationMap: mlMultiArray, clippingMethod: clippingMethod) {[weak self] segmentationResult in
                 switch segmentationResult {
                 case .success(let maskImage):
                     switch clippingMethod {
                     case .selectTouch:
+                        self?.isUserInteractionEnabled = true
                         completionHandler(.success(originalImage: image, clippingImage: maskImage))
                     default:
                         if let maskedImage = image.masking(maskImage: maskImage) {
@@ -102,6 +105,7 @@ public final class SweetfishImageView: UIImageView {
             case .failure(let error):
                 self?.delegate?.sweetfishImageView(clipDidFinish: .failure(error: error))
             }
+            self?.isUserInteractionEnabled = false
         })
     }
 }
