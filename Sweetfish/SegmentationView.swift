@@ -66,6 +66,16 @@ final class SegmentationView: UIView {
         self.completionHandler = completionHandler
     }
 
+    func updateClippingMethod(clippingMethod: ClippingMethod, completionHandler: @escaping ((SegmentationResult) -> Void)) {
+        self.clippingMethod = clippingMethod
+        self.completionHandler = completionHandler
+        self.setNeedsDisplay()
+    }
+
+    func createValueWithPoint(x: Int, y: Int) -> Int32 {
+        return segmentationmap![y, x].int32Value
+    }
+
     func segmentationColor(with index: Int32) -> UIColor {
         switch clippingMethod {
         case .object(let objectType):
@@ -79,7 +89,7 @@ final class SegmentationView: UIView {
                 return color
             }
         case .selectValue(let value):
-            return (index == value) ? .black : .white
+            return (index == value) ? .white : .black
         }
     }
 }
