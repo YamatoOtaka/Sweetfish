@@ -40,29 +40,19 @@ class ViewController: UIViewController {
         updateIndicatorState(shouldShow: true)
         button.isEnabled = false
         resetButton.isEnabled = false
-        sweetfishImageView.predict(objectType: .fish) {[weak self] result in
-            guard let self = self else { return }
-            self.updateIndicatorState(shouldShow: false)
-            self.button.isEnabled = true
-            self.resetButton.isEnabled = true
-
-            switch result {
-            case .success(let originalImage, let clippingImage):
-                self.originalImage = originalImage
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        sweetfishImageView.clipping(clippingMethod: .selectValue(value: 12))
     }
 
     @IBAction func resetButtonTap(_ sender: Any) {
+        sweetfishImageView.cancelSelectClipping()
         sweetfishImageView.image = originalImage
     }
 
     func setupSweetfish() {
         sweetfishImageView.mlModelType = .deepLabV3
         sweetfishImageView.contentMode = .scaleAspectFit
-        sweetfishImageView.image = UIImage(named: "fish")
+        sweetfishImageView.image = UIImage(named: "dog")
+        sweetfishImageView.delegate = self
     }
 
     func updateIndicatorState(shouldShow: Bool) {
@@ -72,6 +62,21 @@ class ViewController: UIViewController {
         } else {
             indicator.isHidden = true
             indicator.stopAnimating()
+        }
+    }
+}
+
+extension ViewController: SweetfishImageViewDelegate {
+    func sweetfishImageView(clipDidFinish result: Result) {
+        self.updateIndicatorState(shouldShow: false)
+        self.button.isEnabled = true
+        self.resetButton.isEnabled = true
+
+        switch result {
+        case .success(let originalImage, let clippingImage):
+            self.originalImage = originalImage
+        case .failure(let error):
+            print(error.localizedDescription)
         }
     }
 }

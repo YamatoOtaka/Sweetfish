@@ -6,7 +6,10 @@
 <a href="https://github.com/Carthage/Carthage"><img alt="Carthage" src="https://img.shields.io/badge/Carthage-compatible-yellow.svg"/></a>
 <a href="https://github.com/YamatoOtaka/Sweetfish/master/LICENSE"><img alt="Lincense" src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
 
-<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample.gif" height="300">
+
+|.object(objectType: .human)|.selectTouch|.selectValue(value: 12)|
+|---|---|---|
+|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample2.GIF" width=300>|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample1.GIF" width=300>|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample3.GIF" width=300>|
 
 
 ## Installation
@@ -34,30 +37,40 @@ let sweetfishImageView = SweetfishImageView()
 sweetfishImageView.mlModelType = .deepLabV3
 sweetfishImageView.contentMode = .scaleAspectFit
 sweetfishImageView.image = UIImage(named: "fish")
+sweetfishImageView.delegate = self
 ```
 
 ### Remove background from image
 
-There are currently two types of Segmentation Object Type `human` and `fish`.
-```swift
-sweetfishImageView.predict(objectType: .fish) { result in
+There are 3 segmentation types for Sweetfish.
 
-    switch result {
-    case .success(let originalImage, let clippingImage):
-        // You can get the original image and the clipped image as a result.
-        self.originalImage = originalImage
-        self.clippingImage = clippingImage
-    case .failure(let error):
-        print(error.localizedDescription)
-    }
-}
-```
+- **object** :
+You can use this if you want to use the sampled object type.
+  ```swift
+  sweetfishImageView.clipping(clippingMethod: .object(objectType: .human))
+  ```
+
+- **selectTouch** :
+If you want to tap a segmented area to select it you can use this.
+  ```swift
+  sweetfishImageView.clipping(clippingMethod: .selectTouch)
+  ```
+
+- **selectValue** :
+If you want to segment by value you can use this
+  ```swift
+  sweetfishImageView.clipping(clippingMethod: .selectValue(value: 16))
+  ```
+
 
 ### Other
 
 ```.swift
-// When to use a custom Model
+// When to use a custom Model.
 sweetfishImageView.mlModelType = .custom(model: CustomMLModel)
+
+// When you want to reject the selection.
+sweetfishImageView.cancelSelectClipping()
 ```
 
 ## License

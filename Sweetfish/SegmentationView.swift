@@ -14,9 +14,10 @@ enum SegmentationResult {
 }
 
 final class SegmentationView: UIView {
+    private var colors: [Int32: UIColor] = [:]
     private var completionHandler: ((SegmentationResult) -> Void)?
-    private var objectType: ObjectType = .human
-    private var segmentationmap: SegmentationResultMLMultiArray? = nil {
+    private var clippingMethod: ClippingMethod = .object(objectType: .human)
+    private(set) var segmentationmap: SegmentationResultMLMultiArray? = nil {
         didSet {
             self.setNeedsDisplay()
         }
@@ -59,17 +60,36 @@ final class SegmentationView: UIView {
         }
     }
 
-    func updateSegmentationMap(segmentationMap: SegmentationResultMLMultiArray?, objectType: ObjectType, completionHandler: @escaping ((SegmentationResult) -> Void)) {
+    func updateSegmentationMap(segmentationMap: SegmentationResultMLMultiArray?, clippingMethod: ClippingMethod, completionHandler: @escaping ((SegmentationResult) -> Void)) {
         self.segmentationmap = segmentationMap
-        self.objectType = objectType
+        self.clippingMethod = clippingMethod
         self.completionHandler = completionHandler
     }
 
-    private func segmentationColor(with index: Int32) -> UIColor {
-        if index == objectType.rawValue {
-            return .black
-        } else {
-            return .white
+    func updateClippingMethod(clippingMethod: ClippingMethod, completionHandler: @escaping ((SegmentationResult) -> Void)) {
+        self.clippingMethod = clippingMethod
+        self.completionHandler = completionHandler
+        self.setNeedsDisplay()
+    }
+
+    func createValueWithPoint(x: Int, y: Int) -> Int32 {
+        return segmentationmap![y, x].int32Value
+    }
+
+    func segmentationColor(with index: Int32) -> UIColor {
+        switch clippingMethod {
+        case .object(let objectType):
+            return (index == objectType.rawValue) ? .black : .white
+        case .selectTouch:
+            if let color = colors[index] {
+                return color
+            } else {
+                let color = UIColor(hue: CGFloat(index) / CGFloat(30), saturation: 1, brightness: 1, alpha: 0.5)
+                colors[index] = color
+                return color
+            }
+        case .selectValue(let value):
+            return (index == value) ? .black : .white
         }
     }
 }
