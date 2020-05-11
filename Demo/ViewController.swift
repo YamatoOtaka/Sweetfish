@@ -40,7 +40,7 @@ class ViewController: UIViewController {
         updateIndicatorState(shouldShow: true)
         button.isEnabled = false
         resetButton.isEnabled = false
-        sweetfishImageView.clipping(clippingMethod: .selectTouch)
+        sweetfishImageView.clipping(clippingMethod: .selectValue(value: 12))
     }
 
     @IBAction func resetButtonTap(_ sender: Any) {
