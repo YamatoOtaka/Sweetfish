@@ -17,7 +17,7 @@ final class SegmentationView: UIView {
     private var colors: [Int32: UIColor] = [:]
     private var completionHandler: ((SegmentationResult) -> Void)?
     private var clippingMethod: ClippingMethod = .object(objectType: .human)
-    private var segmentationmap: SegmentationResultMLMultiArray? = nil {
+    private(set) var segmentationmap: SegmentationResultMLMultiArray? = nil {
         didSet {
             self.setNeedsDisplay()
         }
@@ -89,7 +89,7 @@ final class SegmentationView: UIView {
                 return color
             }
         case .selectValue(let value):
-            return (index == value) ? .white : .black
+            return (index == value) ? .black : .white
         }
     }
 }

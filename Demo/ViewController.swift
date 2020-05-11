@@ -51,7 +51,7 @@ class ViewController: UIViewController {
     func setupSweetfish() {
         sweetfishImageView.mlModelType = .deepLabV3
         sweetfishImageView.contentMode = .scaleAspectFit
-        sweetfishImageView.image = UIImage(named: "fish")
+        sweetfishImageView.image = UIImage(named: "dog")
         sweetfishImageView.delegate = self
     }
 

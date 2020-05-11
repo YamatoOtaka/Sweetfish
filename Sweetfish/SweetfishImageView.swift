@@ -84,13 +84,15 @@ public final class SweetfishImageView: UIImageView {
     }
 
     @objc private func segmentationViewDidTap(_ gesture: UITapGestureRecognizer) {
-        guard let segmentationView = currentSegmentationView else {
+        guard let segmentationView = currentSegmentationView, let segmentationMap = segmentationView.segmentationmap else {
             self.delegate?.sweetfishImageView(clipDidFinish: .failure(error: SweetfishError.unknown))
             return
         }
         let location = gesture.location(in: currentSegmentationView)
-        let positionX = Int(roundf(Float(location.x)))
-        let positionY = Int(roundf(Float(location.y)))
+        // Fit touch point and segmentation area.
+        let displayImageSize = self.imageFrame.size
+        let positionX = Int(roundf(Float(location.x)))*Int(roundf(Float(segmentationMap.segmentationmapWidthSize / Int(displayImageSize.width))))
+        let positionY = Int(roundf(Float(location.y)))*Int(roundf(Float(segmentationMap.segmentationmapHeightSize / Int(displayImageSize.height))))
         let value = segmentationView.createValueWithPoint(x: positionX, y: positionY)
         segmentationView.updateClippingMethod(clippingMethod: .selectValue(value: value), completionHandler: {[weak self] result in
             switch result {
