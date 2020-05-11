@@ -9,7 +9,7 @@
 
 |.object(objectType: .human)|.selectTouch|.selectValue(value: 12)|
 |---|---|---|
-|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample2.GIF" width=300>|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample1.GIF" width=300>|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample3.GIF" width=300>|
+|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample4.GIF" width=300>|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample2.GIF" width=300>|<img src="https://raw.githubusercontent.com/YamatoOtaka/Sweetfish/master/assets/sample1.GIF" width=300>|
 
 
 ## Installation
