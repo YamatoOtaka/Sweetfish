@@ -49,7 +49,6 @@ public final class SweetfishImageView: UIImageView {
 
     public func cancelSelectClipping() {
         self.subviews.forEach { $0.removeFromSuperview() }
-        self.isUserInteractionEnabled = false
     }
 
     private func configureSegmentation(clippingMethod: ClippingMethod, image: UIImage, mlMultiArray: SegmentationResultMLMultiArray?, completionHandler: @escaping ((Result) -> Void)) {
@@ -107,7 +106,6 @@ public final class SweetfishImageView: UIImageView {
             case .failure(let error):
                 self?.delegate?.sweetfishImageView(clipDidFinish: .failure(error: error))
             }
-            self?.isUserInteractionEnabled = false
         })
     }
 }
